@@ -1,0 +1,30 @@
+{
+  "name": "Shoes_API",
+  "version": "1.0.0",
+  "description": "This web-app is Shoes_API",
+  "main": "index.js",
+  "scripts": {
+    "test": "test",
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "shoe_api"
+  },
+  "author": "Rendani Lukhwa",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.17.2",
+    "bootstrap": "^4.0.0-alpha.6",
+    "express": "^4.15.2",
+    "express-flash": "git://github.com/RGBboy/express-flash.git",
+    "express-handlebars": "^3.0.0",
+    "express-session": "^1.15.2",
+    "express3-handlebars": "^0.5.2",
+    "mocha": "^3.4.1",
+    "mongoose": "^4.11.5",
+    "nodemon": "^1.11.0"
+  },
+  "devDependencies": {},
+  "keywords": []
+}
