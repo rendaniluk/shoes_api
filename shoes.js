@@ -27,7 +27,7 @@ module.exports = function(models) {
       if (err) {
         return next(err)
       } else {
-        res.send("shoes added")
+        res.redirect("/")
       }
     })
   }
