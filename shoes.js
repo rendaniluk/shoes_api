@@ -1,9 +1,9 @@
 'use strict'
 module.exports = function(models) {
 
-  const index = function(req, res) {
-    res.render('pages/index')
-  }
+  // const index = function(req, res) {
+  //   res.render('pages/index')
+  // }
 
   const dbUpdates = function(req, res, next) {
     var id = req.body.id;
@@ -97,23 +97,23 @@ module.exports = function(models) {
 
   const sale = function(req, res, next) {
     var sold_shoe = req.params.id;
-    models.shoesApi.remove({
-      id: sold_shoe,
-    }, {
-      in_stock: 1,
-      _id: 0,
-      __v: 0
-    }, function(err, sold) {
-      if (err) {
-        return next(err);
-      } else {
-        res.redirect('/')
-      }
-    })
+    // models.shoesApi.remove({
+    //   id: sold_shoe,
+    // }, {
+    //   in_stock: 1,
+    //   _id: 0,
+    //   __v: 0
+    // }, function(err, sold) {
+    //   if (err) {
+    //     return next(err);
+    //   } else {
+    //     res.redirect('/')
+    //   }
+    // })
   }
 
   return {
-    index,
+    // index,
     shoes,
     dbUpdates,
     brands,

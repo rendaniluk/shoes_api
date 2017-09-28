@@ -21,6 +21,7 @@
     "express-handlebars": "^3.0.0",
     "express-session": "^1.15.2",
     "express3-handlebars": "^0.5.2",
+    "morgan": "~1.7.0",
     "mocha": "^3.4.1",
     "mongoose": "^4.11.5",
     "nodemon": "^1.11.0"
