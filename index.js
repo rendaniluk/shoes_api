@@ -39,6 +39,16 @@ app.use(session({
   saveUninitialized: true
 }));
 
+app.use(function(req, res, next){
+  res.header("Access-Control-Allow-Origin","*");
+  res.header("Access-Control-Allow-Headers","Origin, X-Requested-With, Content-Type, Accept");
+ if (req.method === "OPTIONS") {
+   res.header("Access-Control-Allow-Headers", "PUT,POST,DELETE");
+   return res.status(200).json({})
+ }
+  next();
+});
+
 app.get('/favicon.ico', function(req, res) {
   // res.send('./favicon.ico')
 })
@@ -71,6 +81,7 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.json({
     error: {
+      Status: err.status,
       message: err.message
     }
   });
