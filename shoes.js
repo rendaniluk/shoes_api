@@ -97,6 +97,7 @@ module.exports = function(models) {
 
   const sold = function(req, res, next) {
     var sold_shoe = req.params.id;
+
     models.shoesApi.findOneAndUpdate({
       id: sold_shoe
     }, {

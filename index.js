@@ -63,12 +63,18 @@ app.use(function(req, res, next) {
   var err = new Error("Not Found");
   err.status = 404;
   next(err);
-})
+});
 
 //Error handler
 app.use(function(err, req, res, next) {
-  console.error(err.stack);
-  res.status(500).send(err.stack)
+  // console.error(err.stack);
+  res.status(err.status || 500);
+  res.json({
+    error: {
+      message: err.message
+    }
+  });
+  // .send(err.stack)
 });
 
 app.set('port', (process.env.PORT || 5000));
