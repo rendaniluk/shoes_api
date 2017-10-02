@@ -95,21 +95,23 @@ module.exports = function(models) {
 
   }
 
-  const sale = function(req, res, next) {
+  const sold = function(req, res, next) {
     var sold_shoe = req.params.id;
-    // models.shoesApi.remove({
-    //   id: sold_shoe,
-    // }, {
-    //   in_stock: 1,
-    //   _id: 0,
-    //   __v: 0
-    // }, function(err, sold) {
-    //   if (err) {
-    //     return next(err);
-    //   } else {
-    //     res.redirect('/')
-    //   }
-    // })
+    models.shoesApi.findOneAndUpdate({
+      id: sold_shoe
+    }, {
+      $inc: {
+        in_stock: -1
+      }
+    }, {
+      upsert: false
+    }, function(err, shoe) {
+      if (err) {
+        return next(err)
+      } else {
+        res.json(shoe)
+      }
+    });
   }
 
   return {
@@ -119,7 +121,7 @@ module.exports = function(models) {
     brands,
     sizes,
     sizesBrands,
-    sale
+    sold
   }
 
 

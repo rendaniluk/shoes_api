@@ -39,17 +39,24 @@ app.use(session({
   saveUninitialized: true
 }));
 
+app.get('/favicon.ico', function(req, res) {
+  // res.send('./favicon.ico')
+})
+
 app.get('/', function(req, res) {
   res.redirect('/api/shoes')
 });
 
 //setting up routes
+//GET routes
 app.get('/api/shoes', shoe_apiRoutes.shoes);
 app.get('/api/shoes/brand/:brandname', shoe_apiRoutes.brands);
 app.get('/api/shoes/size/:sizes', shoe_apiRoutes.sizes);
 app.get('/api/shoes/brand/:brandname/size/:sizes', shoe_apiRoutes.sizesBrands);
+
+//POST routes
 app.post('/api/shoes/', shoe_apiRoutes.dbUpdates);
-// app.post('/api/shoes/sold/:id', shoe_apiRoutes.sale);
+app.post('/api/shoes/sold/:id', shoe_apiRoutes.sold);
 
 //catch 404 and forward to error handler
 app.use(function(req, res, next) {
