@@ -6,21 +6,15 @@ module.exports = function(models) {
   // }
 
   const dbUpdates = function(req, res, next) {
-    var id = req.body.id;
-    var color = req.body.color;
-    var brand = req.body.brand;
-    var price = req.body.price;
-    var size = req.body.size;
-    var in_stock = req.body.in_stock;
-
+    var shoe = req.body
 
     var shoes = [{
-      id: id,
-      color: color,
-      brand: brand,
-      price: price,
-      size: size,
-      in_stock: in_stock
+      id: shoe.id,
+      color: shoe.color,
+      brand: shoe.brand,
+      price: shoe.price,
+      size: shoe.size,
+      in_stock: shoe.in_stock
     }]
 
     models.shoesApi.create(shoes, function(err, addShoe) {
@@ -95,24 +89,77 @@ module.exports = function(models) {
 
   }
 
-  const sold = function(req, res, next) {
-    var sold_shoe = req.params.id;
+  // const sold = function(req, res, next) {
+  //   var sold_shoe = req.params.id;
+  //   var qty = req.params.qID;
+  //   Item.aggregate([
+  //           { $unwind: '$dummy'},
+  //           { $match: {'dummy.storage': {$gt: 0}} },
+  //           { $group: {_id: '$_id',
+  //                       dummy: {$push: '$dummy'},
+  //                       original_y: { $first: "$original_y" },
+  //                       new_y: { $first: "$new_y" },
+  //
+  //           }},
+  //           {$project:{
+  //                     original_y: 1, new_y: 1,
+  //                     tallyAmount: {$sum: ["$new_y","$original_y"] }
+  //                   }
+  //           },
+  //        ]
+  //       )
 
-    models.shoesApi.findOneAndUpdate({
-      id: sold_shoe
-    }, {
-      $inc: {
-        in_stock: -1
+  // models.shoesApi.findOneAndUpdate({
+  //   id: sold_shoe
+  // }, {
+  //   $inc: {
+  //     in_stock: -qty
+  //   }
+  // }, {
+  //   upsert: false
+  // }, function(err, shoe) {
+  //   if (err) {
+  //     return next(err)
+  //   } else {
+  //     res.json(shoe)
+  //   }
+  // });
+  // }
+
+  const brand = function(req, res, next) {
+    models.shoesApi.find({}, function(err, all_brands) {
+      var brands = [];
+      var brandsMap = {};
+      for (var i = 0; i < all_brands.length; i++) {
+        if (brandsMap[all_brands[i].brand] === undefined) {
+          brandsMap[all_brands[i].brand] = all_brands[i].brand;
+          brands.push(all_brands[i].brand)
+        }
       }
-    }, {
-      upsert: false
-    }, function(err, shoe) {
       if (err) {
-        return next(err)
+        return next(err);
       } else {
-        res.json(shoe)
+        res.json(brands)
       }
-    });
+    })
+  }
+
+  const size = function(req, res, next) {
+    models.shoesApi.find({}, function(err, all_sizes) {
+      var sizes = [];
+      var sizesMap = {};
+      for (var i = 0; i < all_sizes.length; i++) {
+        if (sizesMap[all_sizes[i].size] === undefined) {
+          sizesMap[all_sizes[i].size] = all_sizes[i].size;
+          sizes.push(all_sizes[i].size)
+        }
+      }
+      if (err) {
+        return next(err);
+      } else {
+        res.json(sizes)
+      }
+    })
   }
 
   return {
@@ -122,7 +169,9 @@ module.exports = function(models) {
     brands,
     sizes,
     sizesBrands,
-    sold
+    brand,
+    size
+    // sold
   }
 
 

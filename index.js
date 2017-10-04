@@ -61,12 +61,14 @@ app.get('/', function(req, res) {
 //GET routes
 app.get('/api/shoes', shoe_apiRoutes.shoes);
 app.get('/api/shoes/brand/:brandname', shoe_apiRoutes.brands);
+app.get('/api/shoes/brand/', shoe_apiRoutes.brand);
 app.get('/api/shoes/size/:sizes', shoe_apiRoutes.sizes);
+app.get('/api/shoes/size/', shoe_apiRoutes.size);
 app.get('/api/shoes/brand/:brandname/size/:sizes', shoe_apiRoutes.sizesBrands);
 
 //POST routes
 app.post('/api/shoes/', shoe_apiRoutes.dbUpdates);
-app.post('/api/shoes/sold/:id', shoe_apiRoutes.sold);
+// app.post('/api/shoes/sold/:id/qty/:qID', shoe_apiRoutes.sold);
 
 //catch 404 and forward to error handler
 app.use(function(req, res, next) {
