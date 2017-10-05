@@ -39,13 +39,14 @@ app.use(session({
   saveUninitialized: true
 }));
 
-app.use(function(req, res, next){
-  res.header("Access-Control-Allow-Origin","*");
-  res.header("Access-Control-Allow-Headers","Origin, X-Requested-With, Content-Type, Accept");
- if (req.method === "OPTIONS") {
-   res.header("Access-Control-Allow-Headers", "PUT,POST,DELETE");
-   return res.status(200).json({})
- }
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type, Accept");
+  if (req.method === "OPTIONS") {
+    res.header("Access-Control-Allow-Headers", "PUT,POST,DELETE");
+    return res.status(200).json({})
+  }
   next();
 });
 
@@ -59,15 +60,15 @@ app.get('/', function(req, res) {
 
 //setting up routes
 //GET routes
-app.get('/api/shoes', shoe_apiRoutes.shoes);
-app.get('/api/shoes/brand/:brandname', shoe_apiRoutes.brands);
-app.get('/api/shoes/brand/', shoe_apiRoutes.brand);
-app.get('/api/shoes/size/:sizes', shoe_apiRoutes.sizes);
-app.get('/api/shoes/size/', shoe_apiRoutes.size);
-app.get('/api/shoes/brand/:brandname/size/:sizes', shoe_apiRoutes.sizesBrands);
+app.get('/api/shoes', shoe_apiRoutes.allShoes);
+app.get('/api/shoes/brand/:brandname', shoe_apiRoutes.brandsFilter);
+app.get('/api/shoes/sizebrandsdropdowns', shoe_apiRoutes.sizesBrandsDropDowns);
+app.get('/api/shoes/size/:sizes', shoe_apiRoutes.sizesFilter);
+// app.get('/api/shoes/size/', shoe_apiRoutes.size);
+app.get('/api/shoes/brand/:brandname/size/:sizes', shoe_apiRoutes.sizesBrandsFilter);
 
 //POST routes
-app.post('/api/shoes/', shoe_apiRoutes.dbUpdates);
+app.post('/api/shoes/', shoe_apiRoutes.stockAdd);
 // app.post('/api/shoes/sold/:id/qty/:qID', shoe_apiRoutes.sold);
 
 //catch 404 and forward to error handler
