@@ -64,12 +64,11 @@ app.get('/api/shoes', shoe_apiRoutes.allShoes);
 app.get('/api/shoes/brand/:brandname', shoe_apiRoutes.brandsFilter);
 app.get('/api/shoes/sizebrandsdropdowns', shoe_apiRoutes.sizesBrandsDropDowns);
 app.get('/api/shoes/size/:sizes', shoe_apiRoutes.sizesFilter);
-// app.get('/api/shoes/size/', shoe_apiRoutes.size);
 app.get('/api/shoes/brand/:brandname/size/:sizes', shoe_apiRoutes.sizesBrandsFilter);
 
 //POST routes
 app.post('/api/shoes/', shoe_apiRoutes.stockAdd);
-// app.post('/api/shoes/sold/:id/qty/:qID', shoe_apiRoutes.sold);
+// app.post('/api/shoes/sold/:id/qty/:qID', shoe_apiRoutes.purchase);
 
 //catch 404 and forward to error handler
 app.use(function(req, res, next) {
