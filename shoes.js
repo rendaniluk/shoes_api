@@ -85,43 +85,40 @@ module.exports = function(models) {
 
   }
 
-
   const purchase = function(req, res, next) {
     var sold_shoe = req.params.id;
     var qty = req.params.qID;
     models.shoesApi.findOne({
-      id: sold_shoe
-    }, function(err, result) {
-      if (err) {
-        return next(err);
-      }else if (result.in_stock - qty === 0) {
-        //there is no stock
-        return {
-          // the correct result here
-          result
-        };
-      }
-
-      result.save(function() {
-        // do things
+        id: sold_shoe
+      },function(err, shoe) {
+        if (err) {
+          return next(err)
+        } else if (shoe.in_stock > 0) {
+          shoe.in_stock -= qty;
+          shoe.save()
+          res.json(shoe)
+        } else {
+          shoe.in_stock = 0;
+          shoe.save()
+          res.json("No stock available")
+        }
       });
-    });
-    // models.shoesApi.findOneAndUpdate({
-    //   id: sold_shoe
-    // }, {
-    //   $inc: {
-    //     in_stock: -qty
-    //   }
-    // }, {
-    //   upsert: false
-    // }, function(err, shoe) {
-    //   if (err) {
-    //     return next(err)
-    //   } else {
-    //     res.json(shoe)
-    //   }
-    // });
+  }
 
+  const updateInstock = function(req, res, next) {
+    var sold_shoe = req.params.id;
+    var qty = req.params.qID;
+    models.shoesApi.findOne({
+        id: sold_shoe
+      },function(err, shoe) {
+        if (err) {
+          return next(err)
+        } else {
+          shoe.in_stock += Number(qty);
+          shoe.save()
+          res.json(shoe)
+        }
+      });
   }
 
   const sizesBrandsDropDowns = function(req, res, next) {
@@ -134,7 +131,7 @@ module.exports = function(models) {
           sizes.push(all_shoes[i].size)
         }
       }
-      var brands = [].sort()
+      var brands = []
       var brandsMap = {};
       for (var i = 0; i < all_shoes.length; i++) {
         if (brandsMap[all_shoes[i].brand] === undefined) {
@@ -148,8 +145,8 @@ module.exports = function(models) {
       } else {
         res.json({
           sizes: sizes.sort(function(a, b) {
-                return a - b;
-              }),
+            return a - b;
+          }),
           brands: brands.sort()
         })
       }
@@ -162,8 +159,9 @@ module.exports = function(models) {
     brandsFilter,
     sizesFilter,
     sizesBrandsDropDowns,
-    sizesBrandsFilter
-    // purchase
+    sizesBrandsFilter,
+    purchase,
+    updateInstock
   }
 
 

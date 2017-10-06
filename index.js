@@ -68,7 +68,8 @@ app.get('/api/shoes/brand/:brandname/size/:sizes', shoe_apiRoutes.sizesBrandsFil
 
 //POST routes
 app.post('/api/shoes/', shoe_apiRoutes.stockAdd);
-// app.post('/api/shoes/sold/:id/qty/:qID', shoe_apiRoutes.purchase);
+app.post('/api/shoes/sold/:id/qty/:qID', shoe_apiRoutes.purchase);
+app.post('/api/shoes/stockadd/:id/qty/:qID', shoe_apiRoutes.updateInstock);
 
 //catch 404 and forward to error handler
 app.use(function(req, res, next) {
