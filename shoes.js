@@ -16,7 +16,7 @@ module.exports = function(models) {
       if (err) {
         return next(err)
       } else {
-        res.redirect("/")
+        res.json(addShoe)
       }
     })
   };
@@ -89,36 +89,39 @@ module.exports = function(models) {
     var sold_shoe = req.params.id;
     var qty = req.params.qID;
     models.shoesApi.findOne({
-        id: sold_shoe
-      },function(err, shoe) {
-        if (err) {
-          return next(err)
-        } else if (shoe.in_stock > 0) {
-          shoe.in_stock -= qty;
-          shoe.save()
-          res.json(shoe)
-        } else {
-          shoe.in_stock = 0;
-          shoe.save()
-          res.json("No stock available")
-        }
-      });
+      id: sold_shoe
+    }, function(err, shoe) {
+      if (err) {
+        return next(err)
+      } else if (shoe.in_stock > 0 && shoe.in_stock > qty) {
+        shoe.in_stock -= qty;
+        shoe.save()
+        res.json(shoe)
+      } else if (shoe.in_stock > 0 && shoe.in_stock < qty) {
+        res.json("Sorry we only have " + shoe.in_stock +
+          " shoes in stock")
+      } else {
+        shoe.in_stock = 0;
+        shoe.save()
+        res.json("No stock available")
+      }
+    });
   }
 
   const updateInstock = function(req, res, next) {
     var sold_shoe = req.params.id;
     var qty = req.params.qID;
     models.shoesApi.findOne({
-        id: sold_shoe
-      },function(err, shoe) {
-        if (err) {
-          return next(err)
-        } else {
-          shoe.in_stock += Number(qty);
-          shoe.save()
-          res.json(shoe)
-        }
-      });
+      id: sold_shoe
+    }, function(err, shoe) {
+      if (err) {
+        return next(err)
+      } else {
+        shoe.in_stock += Number(qty);
+        shoe.save()
+        res.json(shoe)
+      }
+    });
   }
 
   const sizesBrandsDropDowns = function(req, res, next) {
