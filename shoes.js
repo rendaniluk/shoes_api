@@ -9,6 +9,7 @@ module.exports = function(models) {
       brand: shoe.brand,
       price: shoe.price,
       size: shoe.size,
+      image: shoe.image,
       in_stock: shoe.in_stock
     }]
 

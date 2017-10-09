@@ -10,6 +10,7 @@ module.exports = function(mongoURL) {
     brand: String,
     price: Number,
     size: Number,
+    image: String,
     in_stock: Number
   });
 
