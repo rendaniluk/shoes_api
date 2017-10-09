@@ -97,7 +97,7 @@ module.exports = function(models) {
       } else if (shoe.in_stock > 0 && shoe.in_stock > qty) {
         shoe.in_stock -= qty;
         shoe.save()
-        res.json("You have succesfull purchase "+qty+" pairs of shoes")
+        res.json(shoe)
       } else if (shoe.in_stock > 0 && shoe.in_stock < qty) {
         res.json("Sorry we only have " + shoe.in_stock +
           " shoes in stock")
